@@ -112,14 +112,13 @@ public class BibliotecaApplication implements CommandLineRunner {
 					logger.info("Ingrese el autor: ");
 					var autor = consola.nextLine();
 					logger.info("Ingrese la cantidad: ");
-					var cantidad = consola.nextLine();
+					var cantidad = Integer.parseInt(consola.nextLine());
 					libro = new Libro();
 					libro.setIdGenero(idGenero);
 					libro.setIdUbicacion(idUbicacion);
 					libro.setTitulo(titulo);
 					libro.setAutor(autor);
 					libro.setCantidad(cantidad);
-
 					libroService.guardarLibro(libro);
 					logger.info("Libro modificado: "+sl + libro + sl);
 
