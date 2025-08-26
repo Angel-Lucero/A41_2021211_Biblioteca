@@ -150,12 +150,12 @@ public class BibliotecaApplication implements CommandLineRunner {
 			case 6 ->{
 				logger.info(sl +"***Listado de Generos de libros***"+ sl);
 				List<Genero> generos = generoService.listarGeneros();
-				generos.forEach(genero-> logger.info(genero.toString()+sl));
+				generos.forEach(genero1-> logger.info(genero1.toString()+sl));
 			}
 			case 7 ->{
 				logger.info(sl + "***Listado de Ubicaciones de Libros***" + sl);
 				List<Ubicacion> ubicaciones = ubicacionService.listarUbicaciones();
-				ubicaciones.forEach(ubicacion-> logger.info(ubicacion.toString()+sl));
+				ubicaciones.forEach(ubicacion1-> logger.info(ubicacion1.toString()+sl));
 			}
 			case 8 ->{
 				logger.info("Hasta pronto vaquero!◘"+sl+sl);
