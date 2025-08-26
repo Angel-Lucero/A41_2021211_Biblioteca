@@ -5,7 +5,8 @@ import jakarta.persistence.*;
 import lombok.*;
 
 
-@Entity(name = "Libros")
+@Entity
+@Table(name = "Libros")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -15,11 +16,21 @@ public class Libro {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer IdLibro;
-    @Column
-    private Integer IdGenero;
-    private Integer IdUbicacion;
+    @Column(name = "id_libro")
+    private Integer idlibro;
+
+    @Column(name = "id_genero")
+    private Integer idgenero;
+
+    @Column(name = "id_ubicacion")
+    private Integer idubicacion;
+
+    @Column(name = "titulo")
     private String titulo;
+
+    @Column(name = "autor")
     private String autor;
-    private  Integer cantidad;
+
+    @Column(name = "cantidad")
+    private Integer cantidad;
 }

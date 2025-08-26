@@ -1,7 +1,11 @@
 package org.kaven.biblioteca;
 
+import org.kaven.biblioteca.dominio.service.IGeneroService;
 import org.kaven.biblioteca.dominio.service.ILibroService;
+import org.kaven.biblioteca.dominio.service.IUbicacionService;
+import org.kaven.biblioteca.persistence.entity.Genero;
 import org.kaven.biblioteca.persistence.entity.Libro;
+import org.kaven.biblioteca.persistence.entity.Ubicacion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +20,15 @@ import java.util.Scanner;
 public class BibliotecaApplication implements CommandLineRunner {
 	@Autowired
 	private ILibroService libroService;
-	private static final Logger logger = LoggerFactory.getLogger(BibliotecaApplication.class);// usar el 'org.slf4j'
-	String sl = System.lineSeparator();//Salto de linea
+
+	@Autowired
+	private IUbicacionService ubicacionService;
+
+	@Autowired
+	private IGeneroService generoService;
+
+	private static final Logger logger = LoggerFactory.getLogger(BibliotecaApplication.class);
+	String sl = System.lineSeparator();
 
 	public static void main(String[] args) {
 		logger.info(" AQUÍ INICIA NUESTRA APLICACIÓN ");
@@ -49,7 +60,9 @@ public class BibliotecaApplication implements CommandLineRunner {
 				3. Agregar nuevo libro
 				4. Modificar libro
 				5. Eliminar libro
-				6. Salir
+				6. Listar Generos de libros
+				7. Listar Ubicaciones de libros	
+				8. Salir
 				Elije una ocion:" \s """);
 		var opcion = Integer.parseInt(consola.nextLine());
 		return opcion;
@@ -75,47 +88,43 @@ public class BibliotecaApplication implements CommandLineRunner {
 			}
 			case 3 ->{
 				logger.info(sl+"Agregar nuevo libro"+ sl);
-				logger.info("Ingrese el nombre: ");
-				var nombre = consola.nextLine();
-				logger.info("Ingrese el apellido: ");
-				var apellido = consola.nextLine();
-				logger.info("Ingrese el telefono: ");
-				var telefono = consola.nextLine();
-				logger.info("Ingrese el correo: ");
-				var correo = consola.nextLine();
-				logger.info("Ingrese el genero: ");
-				var genero = consola.nextLine();
-				logger.info("Ingrese el edad: ");
-				var edad = Integer.parseInt(consola.nextLine());
+				logger.info("Ingrese el id del genero: ");
+				var idGenero = Integer.parseInt(consola.nextLine());
+				logger.info("Ingrese el id de la ubicacion: ");
+				var idUbicacion = Integer.parseInt(consola.nextLine());
+				logger.info("Ingrese el titulo: ");
+				var titulo = consola.nextLine();
+				logger.info("Ingrese el autor: ");
+				var autor = consola.nextLine();
+				logger.info("Ingrese la cantidad: ");
+				var cantidad = Integer.parseInt(consola.nextLine());
 				var libro = new Libro();
-				libro.setNombre(nombre);
-				libro.setApellido(apellido);
-				libro.setTelefono(telefono);
-				libro.setCorreo(correo);
-				libro.setGenero(genero);
-				libro.setEdad(edad);
+				libro.setIdgenero(idGenero);
+				libro.setIdubicacion(idUbicacion);
+				libro.setTitulo(titulo);
+				libro.setAutor(autor);
+				libro.setCantidad(cantidad);
 				libroService.guardarLibro(libro);
-				logger.info("Cliente agregado: "+sl + libro + sl);
+				logger.info("Libro agregado: "+sl + libro + sl);
 			}
 			case 4 ->{
-				logger.info(sl+"***Modificar Cliente***"+sl);
-				logger.info("Ingrese el código del Cliente a editar");
+				logger.info(sl+"***Modificar Libros***"+sl);
+				logger.info("Ingrese el código del Libro a editar ");
 				var codigo = Integer.parseInt(consola.nextLine());
 				Libro libro = libroService.buscarLibroPorId((codigo));
 				if (libro != null){
-					logger.info("Ingrese el genero: ");
+					logger.info("Ingrese el id del nuevo genero: ");
 					var idGenero = Integer.parseInt(consola.nextLine());
-					logger.info("Ingrese la ubicacion: ");
+					logger.info("Ingrese el id de la nueva ubicacion: ");
 					var idUbicacion = Integer.parseInt(consola.nextLine());
-					logger.info("Ingrese el titulo: ");
+					logger.info("Ingrese el nuevo titulo: ");
 					var titulo = consola.nextLine();
-					logger.info("Ingrese el autor: ");
+					logger.info("Ingrese el nuevo autor: ");
 					var autor = consola.nextLine();
-					logger.info("Ingrese la cantidad: ");
+					logger.info("Ingrese la nuevo cantidad: ");
 					var cantidad = Integer.parseInt(consola.nextLine());
-					libro = new Libro();
-					libro.setIdGenero(idGenero);
-					libro.setIdUbicacion(idUbicacion);
+					libro.setIdgenero(idGenero);
+					libro.setIdubicacion(idUbicacion);
 					libro.setTitulo(titulo);
 					libro.setAutor(autor);
 					libro.setCantidad(cantidad);
@@ -128,7 +137,7 @@ public class BibliotecaApplication implements CommandLineRunner {
 			}
 			case 5 ->{
 				logger.info("***Eliminar libro***"+sl);
-				logger.info("Ingrese el códugo de libro a eliminar");
+				logger.info("Ingrese el códugo de libro a eliminar ");
 				var coddigo = Integer.parseInt(consola.nextLine());
 				var libro = libroService.buscarLibroPorId(coddigo);
 				if (libro != null){
@@ -139,6 +148,16 @@ public class BibliotecaApplication implements CommandLineRunner {
 				}
 			}
 			case 6 ->{
+				logger.info(sl +"***Listado de Generos de libros***"+ sl);
+				List<Genero> generos = generoService.listarGeneros();
+				generos.forEach(genero-> logger.info(genero.toString()+sl));
+			}
+			case 7 ->{
+				logger.info(sl + "***Listado de Ubicaciones de Libros***" + sl);
+				List<Ubicacion> ubicaciones = ubicacionService.listarUbicaciones();
+				ubicaciones.forEach(ubicacion-> logger.info(ubicacion.toString()+sl));
+			}
+			case 8 ->{
 				logger.info("Hasta pronto vaquero!◘"+sl+sl);
 				salir = true;
 			}
