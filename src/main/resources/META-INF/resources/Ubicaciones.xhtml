@@ -1,116 +1,61 @@
 <!DOCTYPE html>
-<h:html xmlns="http://www.w3.org/1999/xhtml"
-        xmlns:h="http://xmlns.jcp.org/jsf/html"
-        xmlns:f="http://xmlns.jcp.org/jsf/core"
-        xmlns:p="http://primefaces.org/ui">
-    <h:head>
-        <title>Kinavana 2021211</title>
-        <link rel="stylesheet" href="https://unpkg.com/primeflex@latest/primeflex.css"/>
-        <link rel="stylesheet" href="https://unpkg.com/primeflex@latest/themes/primeone-dark.css"/>
-    </h:head>
-    <h:body>
-        <p>Hola mundo, estoy en server faces, desde spring boot</p>
-        <div class="card">
-            <h:form id="formulario-clientes">
-                <!--                    Mensaje emergente-->
-                <p:growl id="mensaje_emergente" showDetails="true"/>
-                <!--                    Barra de menus-->
-                <div class="card">
-                    <p:menubar>
-                        <p:menuitem value="Inicio" icon="pi pi-fw pi-user"
-                                    update=":formulario-clientes:tabla-clientes"
-                                    actionListener="#{indexController.cargarDatos}"/>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <title>Ubicaciones - Biblioteca</title>
+    <link rel="stylesheet" href="https://unpkg.com/primeflex@latest/primeflex.css"/>
+</h:head>
+<h:body>
+    <div class="card">
+        <h:form id="form-ubicaciones">
+            <div class="flex justify-content-between align-items-center mb-4">
+                <h2>Listado de Ubicaciones</h2>
+                <p:button value="Volver al Inicio" outcome="index" icon="pi pi-home"/>
+            </div>
 
-                        <p:menuitem value="Nuevo Cliente" icon="pi pi-fw pi-plus"
-                                    actionListener="#{indexController.agregarCliente}"
-                                    update=":formulario-modal:ventana-cliente"
-                                    onComplete="PF('ventanaModalCliente').show"/>
-                    </p:menubar>
-                </div>
-                <!--                    Tabla de datos-->
-                <div class="card">
-                    <p:dataTable values="#{indexController.clientes}" var="cliente" id="tabla-clientes" widgetVar="tablaClientes">
-                        <!--Encabezado-->
-                        <f:facet name="header">
-                            <div class="flex justify-content-center
-                                            flex-wrap card-container yellow-container">
-                                <div class="flex aling-items-center
-                                                justify-content-center
-                                                w-20rem h-4rem
-                                                bg-yellow-500 font-bold
-                                                text-gray-900 border-round m-2">
-                                    <h3>Kinvana, clientes</h3>
-                                </div>
-                            </div>
-                        </f:facet>
-                        <!--Todas las columnas-->
-                        <p:column headerText="ID">
-                            <h:outputText value="#{cliente.codigocliente}"/>
-                        </p:column>
-                        <p:column headerText="NOMBRE">
-                            <h:outputText value="#{cliente.nombre}"/>
-                        </p:column>
-                        <p:column headerText="APELLIDO">
-                            <h:outputText value="#{cliente.apellido}"/>
-                        </p:column>
-                        <p:column headerText="TELEFONO">
-                            <h:outputText value="#{cliente.telefono}"/>
-                        </p:column>
-                        <p:column headerText="CORREO">
-                            <h:outputText value="#{cliente.correo}"/>
-                        </p:column>
-                        <p:column headerText="GENERO">
-                            <h:outputText value="#{cliente.genero}"/>
-                        </p:column>
-                        <p:column headerText="EDAD">
-                            <h:outputText value="#{cliente.edad}"/>
-                        </p:column>
-                        <p:column headerText="OPCION">
-                            <p:commandButton value="Editar" icon="pi pi-pencil" class="ui-button-primary">
-                            </p:commandButton>
-                            <p:commandButton value="Eliminar" icon="pi pi-trash" class="ui-button-danger">
-                            </p:commandButton>
-                        </p:column>
+            <p:dataTable id="tablaUbicaciones" var="ubicacion" value="#{ubicacionController.ubicaciones}"
+                         paginator="true" rows="10" rowsPerPageTemplate="5,10,15"
+                         emptyMessage="No se encontraron ubicaciones">
+                <f:facet name="header">
+                    <div class="flex justify-content-between">
+                        <span>Ubicaciones Disponibles</span>
+                        <p:inputText placeholder="Buscar..." onkeyup="PF('tablaUbicaciones').filter()"
+                                     style="width: 200px"/>
+                    </div>
+                </f:facet>
 
-                    </p:dataTable>
-                </div>
-            </h:form>
-            <h:form>
-                <p:dialog header="Detalle del Cliente" showEffect="fade"
-                          modal="true" widgetVar="ventanaModalCliente" resposive="true">
-                    <p:outputPanel id="ventana-cliente" class="ui-fluid">
-                        <div class="field">
-                            <p:outputLabel for="nombre">NOMBRE</p:outputLabel>
-                            <p:inputText id="nombre" required="true"/>
-                        </div>
-                        <div class="field">
-                            <p:outputLabel for="apellido">APELLIDO</p:outputLabel>
-                            <p:inputText id="apellido" required="false"/>
-                        </div>
-                        <div class="field">
-                            <p:outputLabel for="telefono">TELEFONO</p:outputLabel>
-                            <p:inputText id="telefono" required="false"/>
-                        </div>
-                        <div class="field">
-                            <p:outputLabel for="correo">CORREO</p:outputLabel>
-                            <p:inputText id="correo" required="true"/>
-                        </div>
-                        <div class="field">
-                            <p:outputLabel for="genero">GENERO</p:outputLabel>
-                            <p:inputText id="genero" required="false"/>
-                        </div>
-                        <div class="field">
-                            <p:outputLabel for="edad">EDAD</p:outputLabel>
-                            <p:inputText id="edad" required="false"/>
-                        </div>
-                    </p:outputPanel>
-                    <f:facet name="footer">
-                        <p:commandButton value="Guardar" icon="pi pi-check" class="ui-button-primary"/>
-                        <p:commandButton value="Cancelar" icon="pi pi-times" class="ui-button-secondary"
-                                         onClick="PF('ventanaModalCliente').hide()" type="button"/>
-                    </f:facet>
-                </p:dialog>
-            </h:form>
-        </div>
-    </h:body>
-</h:html>
+                <p:column headerText="ID" sortBy="#{ubicacion.idUbicacion}" filterBy="#{ubicacion.idUbicacion}">
+                    <h:outputText value="#{ubicacion.idUbicacion}"/>
+                </p:column>
+
+                <p:column headerText="Edificio" sortBy="#{ubicacion.edificio}"
+                          filterBy="#{ubicacion.edificio}" filterMatchMode="contains">
+                    <h:outputText value="#{ubicacion.edificio}"/>
+                </p:column>
+
+                <p:column headerText="Sala" sortBy="#{ubicacion.sala}"
+                          filterBy="#{ubicacion.sala}" filterMatchMode="contains">
+                    <h:outputText value="#{ubicacion.sala}"/>
+                </p:column>
+
+                <p:column headerText="Estante" sortBy="#{ubicacion.estante}"
+                          filterBy="#{ubicacion.estante}" filterMatchMode="contains">
+                    <h:outputText value="#{ubicacion.estante}"/>
+                </p:column>
+
+                <p:column headerText="Fila" sortBy="#{ubicacion.fila}"
+                          filterBy="#{ubicacion.fila}" filterMatchMode="contains">
+                    <h:outputText value="#{ubicacion.fila}"/>
+                </p:column>
+
+                <p:column headerText="Columna" sortBy="#{ubicacion.columna}"
+                          filterBy="#{ubicacion.columna}" filterMatchMode="contains">
+                    <h:outputText value="#{ubicacion.columna}"/>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </div>
+</h:body>
+</html>
