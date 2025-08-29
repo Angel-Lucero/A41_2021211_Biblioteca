@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class BibliotecaApplicationWeb {
 
     public static void main(String[] args) {
-        SpringApplication.run(BibliotecaApplicationWeb.class);
+        SpringApplication.run(BibliotecaApplicationWeb.class, args);
     }
 
 }

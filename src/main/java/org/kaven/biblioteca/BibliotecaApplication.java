@@ -18,11 +18,11 @@ import java.util.Scanner;
 
 //@SpringBootApplication
 public class BibliotecaApplication implements CommandLineRunner {
-	@Autowired
+	//@Autowired
 	private ILibroService libroService;
-    @Autowired
+    //@Autowired
     private IUbicacionService ubicacionService;
-    @Autowired
+    //@Autowired
     private IGeneroService generoService;
 
 	private static final Logger logger = LoggerFactory.getLogger(BibliotecaApplication.class);

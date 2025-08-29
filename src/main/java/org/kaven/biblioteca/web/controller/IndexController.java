@@ -15,23 +15,4 @@ import java.util.List;
 @ViewScoped
 public class IndexController {
 
-    @Autowired
-    IClienteService clienteService;
-    private List<Cliente> clientes;
-    private Cliente clienteSeleccionado;
-    private static final Logger logger = LoggerFactory.getLogger(IndexController.class);
-
-    @PostConstruct
-    public void init(){
-        cargarDatos();
-    }
-
-    public void cargarDatos(){
-        this.clientes = this.clienteService.listarClientes();
-        this.clientes.forEach(cliente -> logger.info(cliente.toString()));
-    }
-
-    public void agregarCliente(){
-        this.clienteSeleccionado = new Cliente();
-    }
 }

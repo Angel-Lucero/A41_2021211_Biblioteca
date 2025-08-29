@@ -4,8 +4,8 @@ use kavenLibreriaDB;
 
 create table Generos(
 	id_genero int not null auto_increment,
-    tipoGenero  varchar(64) not null,
-    descripcionGenero varchar (255) not null,
+    tipo_genero  varchar(64) not null,
+    descripcion_genero varchar (255) not null,
 	constraint pk_Generos primary key (id_genero)  
 );
 
@@ -15,7 +15,7 @@ create table Ubicacion (
 	sala varchar(64) not null,
 	estante varchar(64) not null,
 	fila varchar(64) not null,
-	columa varchar(64) not null,
+	columna varchar(64) not null,
 	constraint pk_Ubicacion primary key (id_ubicacion)  
 );
 
@@ -34,14 +34,14 @@ create table Libros (
     on delete cascade    
 );
 
-insert into Generos (tipoGenero, descripcionGenero) values
+insert into Generos (tipo_genero, descripcion_genero) values
 ('Accion', 'Películas de acción con mucha adrenalina y adrenalina.'),
 ('Drama', 'Películas dramáticas que tocan temas profundos de la vida.'),
 ('Comedia', 'Películas que buscan hacer reír al público.'),
 ('Terror', 'Películas que buscan asustar y crear tensión.'),
 ('Ciencia Ficción', 'Películas que exploran futuros tecnológicos y mundos imaginarios.');
 
-insert into Ubicacion (edificio, sala, estante, fila, columa) values
+insert into Ubicacion (edificio, sala, estante, fila, columna) values
 ('Edificio A', 'Sala 1', 'Estante 3', 'Fila 1', 'Columna 2'),
 ('Edificio B', 'Sala 2', 'Estante 4', 'Fila 2', 'Columna 3'),
 ('Edificio C', 'Sala 3', 'Estante 1', 'Fila 3', 'Columna 4'),

@@ -1,116 +1,120 @@
 <!DOCTYPE html>
-<h:html xmlns="http://www.w3.org/1999/xhtml"
-        xmlns:h="http://xmlns.jcp.org/jsf/html"
-        xmlns:f="http://xmlns.jcp.org/jsf/core"
-        xmlns:p="http://primefaces.org/ui">
-    <h:head>
-        <title>Kinavana 2021211</title>
-        <link rel="stylesheet" href="https://unpkg.com/primeflex@latest/primeflex.css"/>
-        <link rel="stylesheet" href="https://unpkg.com/primeflex@latest/themes/primeone-dark.css"/>
-    </h:head>
-    <h:body>
-        <p>Hola mundo, estoy en server faces, desde spring boot</p>
-        <div class="card">
-            <h:form id="formulario-clientes">
-                <!--                    Mensaje emergente-->
-                <p:growl id="mensaje_emergente" showDetails="true"/>
-                <!--                    Barra de menus-->
-                <div class="card">
-                    <p:menubar>
-                        <p:menuitem value="Inicio" icon="pi pi-fw pi-user"
-                                    update=":formulario-clientes:tabla-clientes"
-                                    actionListener="#{indexController.cargarDatos}"/>
-
-                        <p:menuitem value="Nuevo Cliente" icon="pi pi-fw pi-plus"
-                                    actionListener="#{indexController.agregarCliente}"
-                                    update=":formulario-modal:ventana-cliente"
-                                    onComplete="PF('ventanaModalCliente').show"/>
-                    </p:menubar>
-                </div>
-                <!--                    Tabla de datos-->
-                <div class="card">
-                    <p:dataTable values="#{indexController.clientes}" var="cliente" id="tabla-clientes" widgetVar="tablaClientes">
-                        <!--Encabezado-->
-                        <f:facet name="header">
-                            <div class="flex justify-content-center
-                                            flex-wrap card-container yellow-container">
-                                <div class="flex aling-items-center
-                                                justify-content-center
-                                                w-20rem h-4rem
-                                                bg-yellow-500 font-bold
-                                                text-gray-900 border-round m-2">
-                                    <h3>Kinvana, clientes</h3>
-                                </div>
-                            </div>
-                        </f:facet>
-                        <!--Todas las columnas-->
-                        <p:column headerText="ID">
-                            <h:outputText value="#{cliente.codigocliente}"/>
-                        </p:column>
-                        <p:column headerText="NOMBRE">
-                            <h:outputText value="#{cliente.nombre}"/>
-                        </p:column>
-                        <p:column headerText="APELLIDO">
-                            <h:outputText value="#{cliente.apellido}"/>
-                        </p:column>
-                        <p:column headerText="TELEFONO">
-                            <h:outputText value="#{cliente.telefono}"/>
-                        </p:column>
-                        <p:column headerText="CORREO">
-                            <h:outputText value="#{cliente.correo}"/>
-                        </p:column>
-                        <p:column headerText="GENERO">
-                            <h:outputText value="#{cliente.genero}"/>
-                        </p:column>
-                        <p:column headerText="EDAD">
-                            <h:outputText value="#{cliente.edad}"/>
-                        </p:column>
-                        <p:column headerText="OPCION">
-                            <p:commandButton value="Editar" icon="pi pi-pencil" class="ui-button-primary">
-                            </p:commandButton>
-                            <p:commandButton value="Eliminar" icon="pi pi-trash" class="ui-button-danger">
-                            </p:commandButton>
-                        </p:column>
-
-                    </p:dataTable>
-                </div>
-            </h:form>
-            <h:form>
-                <p:dialog header="Detalle del Cliente" showEffect="fade"
-                          modal="true" widgetVar="ventanaModalCliente" resposive="true">
-                    <p:outputPanel id="ventana-cliente" class="ui-fluid">
-                        <div class="field">
-                            <p:outputLabel for="nombre">NOMBRE</p:outputLabel>
-                            <p:inputText id="nombre" required="true"/>
-                        </div>
-                        <div class="field">
-                            <p:outputLabel for="apellido">APELLIDO</p:outputLabel>
-                            <p:inputText id="apellido" required="false"/>
-                        </div>
-                        <div class="field">
-                            <p:outputLabel for="telefono">TELEFONO</p:outputLabel>
-                            <p:inputText id="telefono" required="false"/>
-                        </div>
-                        <div class="field">
-                            <p:outputLabel for="correo">CORREO</p:outputLabel>
-                            <p:inputText id="correo" required="true"/>
-                        </div>
-                        <div class="field">
-                            <p:outputLabel for="genero">GENERO</p:outputLabel>
-                            <p:inputText id="genero" required="false"/>
-                        </div>
-                        <div class="field">
-                            <p:outputLabel for="edad">EDAD</p:outputLabel>
-                            <p:inputText id="edad" required="false"/>
-                        </div>
-                    </p:outputPanel>
-                    <f:facet name="footer">
-                        <p:commandButton value="Guardar" icon="pi pi-check" class="ui-button-primary"/>
-                        <p:commandButton value="Cancelar" icon="pi pi-times" class="ui-button-secondary"
-                                         onClick="PF('ventanaModalCliente').hide()" type="button"/>
-                    </f:facet>
-                </p:dialog>
-            </h:form>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>Sistema de Biblioteca</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <style>
+        .main-container {
+            padding: 20px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #2c3e50;
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+        .custom-card {
+            width: 300px;
+            height: 350px;
+            transition: transform 0.3s;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+        .custom-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+        }
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .card-content {
+            padding: 20px;
+            text-align: center;
+        }
+        .card-icon {
+            font-size: 5rem;
+            color: #3498db;
+            margin: 20px 0;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+        .welcome-text {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            text-align: center;
+            color: #34495e;
+        }
+        @media (max-width: 768px) {
+            .card-container {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</h:head>
+<h:body>
+    <div class="main-container">
+        <div class="header">
+            <h1>🏛️ Sistema de Gestión de Biblioteca</h1>
+            <p>Gestiona tu biblioteca de manera eficiente y organizada</p>
         </div>
-    </h:body>
-</h:html>
+        <div class="welcome-text">
+            <p>Bienvenido al sistema de gestión de biblioteca. Selecciona una de las siguientes secciones para comenzar:</p>
+        </div>
+        <div class="card-container">
+            <p:card styleClass="custom-card">
+                <div class="card-content">
+                    <div class="card-icon">📚</div>
+                    <h2 class="card-title">Géneros Literarios</h2>
+                    <p>Gestiona los diferentes géneros literarios disponibles en la biblioteca.</p>
+                    <p:button outcome="Generos" value="Acceder a Géneros" icon="pi pi-arrow-right"
+                              style="margin-top: 15px; background-color: #3498db; border-color: #3498db;"/>
+                </div>
+            </p:card>
+            <p:card styleClass="custom-card">
+                <div class="card-content">
+                    <div class="card-icon">📍</div>
+                    <h2 class="card-title">Ubicaciones</h2>
+                    <p>Administra las ubicaciones físicas de los libros en la biblioteca.</p>
+                    <p:button outcome="Ubicaciones" value="Acceder a Ubicaciones" icon="pi pi-arrow-right"
+                              style="margin-top: 15px; background-color: #2ecc71; border-color: #2ecc71;"/>
+                </div>
+            </p:card>
+            <p:card styleClass="custom-card">
+                <div class="card-content">
+                    <div class="card-icon">📖</div>
+                    <h2 class="card-title">Libros</h2>
+                    <p>Gestiona el catálogo completo de libros de la biblioteca.</p>
+                    <p:button outcome="Libros" value="Acceder a Libros" icon="pi pi-arrow-right"
+                              style="margin-top: 15px; background-color: #e74c3c; border-color: #e74c3c;"/>
+                </div>
+            </p:card>
+        </div>
+        <div class="footer">
+            <p>Sistema de Biblioteca; 2025 - Desarrollado con PrimeFaces y Spring Boot - Angel Fernando Lucero León - 2021211</p>
+        </div>
+    </div>
+</h:body>
+</html>
