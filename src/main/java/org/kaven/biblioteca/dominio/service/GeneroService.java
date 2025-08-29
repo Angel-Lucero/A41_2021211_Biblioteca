@@ -3,9 +3,11 @@ package org.kaven.biblioteca.dominio.service;
 import org.kaven.biblioteca.persistence.crud.GeneroCrud;
 import org.kaven.biblioteca.persistence.entity.Genero;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class GeneroService implements IGeneroService{
         @Autowired
         private GeneroCrud crud;

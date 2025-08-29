@@ -16,16 +16,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import java.util.List;
 import java.util.Scanner;
 
-@SpringBootApplication
+//@SpringBootApplication
 public class BibliotecaApplication implements CommandLineRunner {
 	@Autowired
 	private ILibroService libroService;
-
-	@Autowired
-	private IUbicacionService ubicacionService;
-
-	@Autowired
-	private IGeneroService generoService;
+    @Autowired
+    private IUbicacionService ubicacionService;
+    @Autowired
+    private IGeneroService generoService;
 
 	private static final Logger logger = LoggerFactory.getLogger(BibliotecaApplication.class);
 	String sl = System.lineSeparator();

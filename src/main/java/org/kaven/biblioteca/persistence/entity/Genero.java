@@ -7,7 +7,7 @@ import jakarta.persistence.Id;
 import lombok.*;
 
 
-@Entity(name = "Genero")
+@Entity(name = "Generos")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,10 +20,10 @@ public class Genero {
     @Column(name = "id_genero")
     private Integer idgenero;
 
-    @Column(name = "tipogGenero")
+    @Column(name = "tipo_genero")
     private String tipogGenero;
 
-    @Column(name = "descripcionGenero")
+    @Column(name = "descripcion_genero")
     private String descripcionGenero;
 
 
