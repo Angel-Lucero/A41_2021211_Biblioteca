@@ -28,7 +28,8 @@ create table Libros (
     cantidad int not null,
     constraint pk_libros primary key (id_libro),
     constraint fk_libros_generos foreign key (id_genero)
-		references Generos (id_genero),
+		references Generos (id_genero)
+	on delete cascade,
 	constraint fk_libros_ubicacion foreign key (id_ubicacion)
 		references Ubicacion (id_ubicacion)    
     on delete cascade    
@@ -54,7 +55,7 @@ insert into Libros (id_genero, id_ubicacion, titulo, autor, cantidad) values
 (3, 3, 'Risas y carcajadas', 'Carlos López', 30),
 (4, 4, 'Noche de terror', 'María Rodríguez', 25),
 (5, 5, 'Futuro desconocido', 'Luis Martínez', 10);
-
+		
 select * from Libros;
 select * from Generos;
-select * from Ubicacion;
+select * from Ubicacion;	

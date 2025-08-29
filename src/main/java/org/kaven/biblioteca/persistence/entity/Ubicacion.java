@@ -1,9 +1,6 @@
 package org.kaven.biblioteca.persistence.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity(name = "Ubicacion")
@@ -15,7 +12,7 @@ import lombok.*;
 public class Ubicacion {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_ubicacion")
     private Integer idUbicacion;
 

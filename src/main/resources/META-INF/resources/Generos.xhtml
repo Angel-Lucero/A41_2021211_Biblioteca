@@ -29,11 +29,10 @@
                         <f:facet name="header">
                             <div class="flex justify-content-center flex-wrap card-container yellow-container">
                                 <div class="flex align-items-center justify-content-center w-20rem h-4rem bg-yellow-500 font-bold text-gray-900 border-round m-2">
-                                    <h3>Kinvana, Géneros</h3>
+                                    <h3>Géneros</h3>
                                 </div>
                             </div>
                         </f:facet>
-                        <!-- Todas las columnas -->
                         <p:column headerText="ID">
                             <h:outputText value="#{genero.idgenero}"/>
                         </p:column>
@@ -43,7 +42,7 @@
                         <p:column headerText="DESCRIPCIÓN">
                             <h:outputText value="#{genero.descripcionGenero}"/>
                         </p:column>
-                        <p:column headerText="OPCION">
+                        <p:column headerText="OPCIONES">
                             <p:commandButton value="Editar" icon="pi pi-pencil" class="ui-button-primary"
                                              update="formulario-modal:ventana-genero"
                                              process="@this" style="margin-right: 5rem"
@@ -68,40 +67,37 @@
                 <p:dialog header="Detalle del género" showEffect="fade"
                           modal="true" widgetVar="VentanaModalGenero" responsive="true">
                     <p:outputPanel id="ventana-genero" class="ui-fluid">
+
                         <div class="field">
-                            <p:outputLabel for="idgenero">ID GÉNERO</p:outputLabel>
-                            <p:inputText id="idgenero" required="true"
-                                         value="#{generosController.generoSeleccionado.idgenero}"/>
-                        </div>
-                        <div class="field">
-                            <p:outputLabel for="tipogenero">TIPO GÉNERO</p:outputLabel>
-                            <p:inputText id="tipogenero" required="false"
+                            <p:outputLabel for="tipogenero">TIPO GÉNERO *</p:outputLabel>
+                            <p:inputText id="tipogenero" required="true"
                                          value="#{generosController.generoSeleccionado.tipogGenero}"/>
+                            <p:message for="tipogenero"/>
                         </div>
                         <div class="field">
-                            <p:outputLabel for="descripcion">DESCRIPCIÓN</p:outputLabel>
-                            <p:inputText id="descripcion" required="false"
+                            <p:outputLabel for="descripcion">DESCRIPCIÓN *</p:outputLabel>
+                            <p:inputText id="descripcion" required="true"
                                          value="#{generosController.generoSeleccionado.descripcionGenero}"/>
+                            <p:message for="descripcion"/>
                         </div>
                     </p:outputPanel>
                     <f:facet name="footer">
                         <p:commandButton value="Guardar" icon="pi pi-check"
                                          class="ui-button-primary"
                                          process="ventana-genero @this"
-                                         actionListener="#{generosController.guardarGenero}"/>
-
+                                         actionListener="#{generosController.guardarGenero}"
+                                         update="formulario-generos:mensaje_emergente"/>
                         <p:commandButton value="Cancelar" icon="pi pi-times" class="ui-button-secondary"
                                          onclick="PF('VentanaModalGenero').hide()" type="button"/>
                     </f:facet>
                 </p:dialog>
                 <p:confirmDialog widgetVar="VentanaEliminarGenero" showEffect="fade"
-                                 width="300" message="Desea eliminar el género?"
-                                 header="Confirme su seleccion" severity="warn">
+                                 width="300" message="¿Desea eliminar el género?"
+                                 header="Confirme su selección" severity="warn">
                     <p:commandButton value="SI" icon="pi pi-check" class="ui-button-primary"
                                      process="@this"
                                      actionListener="#{generosController.eliminarGenero}"
                                      oncomplete="PF('VentanaEliminarGenero').hide()"/>
-
                     <p:commandButton value="NO" icon="pi pi-times" class="ui-button-warning"
                                      onclick="PF('VentanaEliminarGenero').hide()"
                                      type="button"/>

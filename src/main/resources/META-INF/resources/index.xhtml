@@ -8,112 +8,153 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <style>
         .main-container {
-            padding: 20px;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             min-height: 100vh;
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            padding: 2rem;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        .header {
+
+        .header-panel {
             text-align: center;
-            margin-bottom: 30px;
-            padding: 20px;
-            background: #2c3e50;
-            color: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        .card-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
-        }
-        .custom-card {
-            width: 300px;
-            height: 350px;
-            transition: transform 0.3s;
+            margin-bottom: 2rem;
+            padding: 2rem;
+            background: #1e2a38;
+            color: #ecf0f1;
             border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            border: 1px solid #34495e;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
         }
-        .custom-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+
+        .welcome-panel {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: #1e2a38;
+            color: #bdc3c7;
+            border-radius: 12px;
+            border: 1px solid #34495e;
         }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: #1e2a38;
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid #34495e;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            border-color: #3498db;
+        }
+
         .card-title {
             font-size: 1.5rem;
-            font-weight: bold;
-            color: #2c3e50;
+            font-weight: 600;
+            color: #ecf0f1;
+            margin-bottom: 1rem;
         }
-        .card-content {
-            padding: 20px;
-            text-align: center;
-        }
+
         .card-icon {
-            font-size: 5rem;
+            font-size: 4rem;
+            margin: 1rem 0;
             color: #3498db;
-            margin: 20px 0;
         }
-        .footer {
+
+        .card-text {
+            color: #bdc3c7;
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+
+        .footer-panel {
             text-align: center;
-            margin-top: 40px;
-            padding: 20px;
+            margin-top: 3rem;
+            padding: 1.5rem;
+            background: #1e2a38;
             color: #7f8c8d;
+            border-radius: 12px;
+            border: 1px solid #34495e;
             font-size: 0.9rem;
         }
+
         .welcome-text {
-            font-size: 1.2rem;
-            margin-bottom: 30px;
-            text-align: center;
-            color: #34495e;
+            font-size: 1.1rem;
+            color: #bdc3c7;
         }
+
+        .header-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #ecf0f1;
+            margin-bottom: 0.5rem;
+        }
+
+        .header-subtitle {
+            font-size: 1.2rem;
+            color: #bdc3c7;
+        }
+
         @media (max-width: 768px) {
-            .card-container {
-                flex-direction: column;
-                align-items: center;
+            .main-container {
+                padding: 1rem;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header-title {
+                font-size: 2rem;
             }
         }
     </style>
 </h:head>
 <h:body>
     <div class="main-container">
-        <div class="header">
-            <h1>Sistema de Gestión de Biblioteca</h1>
-            <p>Gestiona tu biblioteca de manera eficiente y organizada</p>
+        <div class="header-panel">
+            <div class="header-title">Sistema de Gestión de Biblioteca</div>
+            <div class="header-subtitle">Gestiona tu biblioteca de manera eficiente y organizada</div>
         </div>
-        <div class="welcome-text">
-            <p>Bienvenido al sistema de gestión de biblioteca. Selecciona una de las siguientes secciones para comenzar:</p>
+        <div class="welcome-panel">
+            <div class="welcome-text">Bienvenido al sistema de gestión de biblioteca. Selecciona una de las siguientes secciones para comenzar:</div>
         </div>
-        <div class="card-container">
-            <p:card styleClass="custom-card">
-                <div class="card-content">
-                    <div class="card-icon"></div>
-                    <h2 class="card-title">Géneros Literarios</h2>
-                    <p>Gestiona los diferentes géneros literarios disponibles en la biblioteca.</p>
-                    <p:button outcome="Generos" value="Acceder a Géneros" icon="pi pi-arrow-right"
-                              style="margin-top: 15px; background-color: #3498db; border-color: #3498db;"/>
-                </div>
-            </p:card>
-            <p:card styleClass="custom-card">
-                <div class="card-content">
-                    <div class="card-icon"></div>
-                    <h2 class="card-title">Ubicaciones</h2>
-                    <p>Administra las ubicaciones físicas de los libros en la biblioteca.</p>
-                    <p:button outcome="Ubicaciones" value="Acceder a Ubicaciones" icon="pi pi-arrow-right"
-                              style="margin-top: 15px; background-color: #2ecc71; border-color: #2ecc71;"/>
-                </div>
-            </p:card>
-            <p:card styleClass="custom-card">
-                <div class="card-content">
-                    <div class="card-icon"></div>
-                    <h2 class="card-title">Libros</h2>
-                    <p>Gestiona el catálogo completo de libros de la biblioteca.</p>
-                    <p:button outcome="Libros" value="Acceder a Libros" icon="pi pi-arrow-right"
-                              style="margin-top: 15px; background-color: #e74c3c; border-color: #e74c3c;"/>
-                </div>
-            </p:card>
+        <div class="cards-grid">
+            <div class="card">
+                <div class="card-title">Géneros Literarios</div>
+                <div class="card-icon"></div>
+                <div class="card-text">Gestiona los diferentes géneros literarios disponibles en la biblioteca.</div>
+                <p:button outcome="Generos" value="Acceder a Géneros" icon="pi pi-arrow-right"
+                          styleClass="p-button-primary" style="width: 100%"/>
+            </div>
+            <div class="card">
+                <div class="card-title">Ubicaciones</div>
+                <div class="card-icon"></div>
+                <div class="card-text">Administra las ubicaciones físicas de los libros en la biblioteca.</div>
+                <p:button outcome="Ubicaciones" value="Acceder a Ubicaciones" icon="pi pi-arrow-right"
+                          styleClass="p-button-success" style="width: 100%"/>
+            </div>
+            <div class="card">
+                <div class="card-title">Libros</div>
+                <div class="card-icon"></div>
+                <div class="card-text">Gestiona el catálogo completo de libros de la biblioteca.</div>
+                <p:button outcome="Libros" value="Acceder a Libros" icon="pi pi-arrow-right"
+                          styleClass="p-button-warning" style="width: 100%"/>
+            </div>
         </div>
-        <div class="footer">
-            <p>Sistema de Biblioteca; 2025 - Desarrollado con PrimeFaces y Spring Boot - Angel Fernando Lucero León - 2021211</p>
+        <div class="footer-panel">
+            <div>Sistema de Biblioteca © 2025 - Desarrollado con PrimeFaces y Spring Boot - Angel Fernando Lucero León - 2021211</div>
         </div>
     </div>
 </h:body>
