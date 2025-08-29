@@ -1,46 +1,144 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
-<h:head>
-    <title>Géneros - Biblioteca</title>
-    <link rel="stylesheet" href="https://unpkg.com/primeflex@latest/primeflex.css"/>
-</h:head>
-<h:body>
-    <div class="card">
-        <h:form id="form-generos">
-            <div class="flex justify-content-between align-items-center mb-4">
-                <h2>Listado de Géneros</h2>
-                <p:button value="Volver al Inicio" outcome="index" icon="pi pi-home"/>
-            </div>
+<h:html xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Kinavana 2024422</title>
+        <link rel="stylesheet" href="https://unpkg.com/primeflex@latest/primeflex.css"/>
+        <link rel="stylesheet" href="https://unpkg.com/primeflex@latest/themes/primeone-dark.css"/>
+    </h:head>
+    <h:body>
+        <p>Hola mundo, estoy en server faces, desde spring boot</p>
+        <div class="card">
+            <h:form id="formulario-clientes">
+                <!-- Mensaje emergente -->
+                <p:growl id="mensaje_emergente" showDetails="true"/>
+                <!-- Barra de menus -->
+                <div class="card">
+                    <p:menubar>
+                        <p:menuitem value="Inicio" icon="pi pi-fw pi-user"
+                                    update=":formulario-clientes:tabla-clientes"
+                                    actionListener="#{indexController.cargarDatos}"/>
 
-            <p:dataTable id="tablaGeneros" var="genero" value="#{generoController.generos}"
-                         paginator="true" rows="10" rowsPerPageTemplate="5,10,15"
-                         emptyMessage="No se encontraron géneros">
-                <f:facet name="header">
-                    <div class="flex justify-content-between">
-                        <span>Géneros Disponibles</span>
-                        <p:inputText placeholder="Buscar..." onkeyup="PF('tablaGeneros').filter()"
-                                     style="width: 200px"/>
-                    </div>
-                </f:facet>
+                        <p:menuitem value="Nuevo Cliente" icon="pi pi-fw pi-plus"
+                                    actionListener="#{indexController.agregarCliente}"
+                                    update=":formulario-modal:ventana-cliente"
+                                    oncomplete="PF('VentanaModalCliente').show()"/>
+                    </p:menubar>
+                </div>
+                <!-- Tabla de datos -->
+                <div class="card">
+                    <p:dataTable value="#{indexController.clientes}" var="cliente" id="tabla-clientes" widgetVar="tablaClientes">
+                        <!-- Encabezado -->
+                        <f:facet name="header">
+                            <div class="flex justify-content-center flex-wrap card-container yellow-container">
+                                <div class="flex align-items-center justify-content-center w-20rem h-4rem bg-yellow-500 font-bold text-gray-900 border-round m-2">
+                                    <h3>Kinvana, clientes</h3>
+                                </div>
+                            </div>
+                        </f:facet>
+                        <!-- Todas las columnas -->
+                        <p:column headerText="ID">
+                            <h:outputText value="#{cliente.codigocliente}"/>
+                        </p:column>
+                        <p:column headerText="NOMBRE">
+                            <h:outputText value="#{cliente.nombre}"/>
+                        </p:column>
+                        <p:column headerText="APELLIDO">
+                            <h:outputText value="#{cliente.apellido}"/>
+                        </p:column>
+                        <p:column headerText="TELEFONO">
+                            <h:outputText value="#{cliente.telefono}"/>
+                        </p:column>
+                        <p:column headerText="CORREO">
+                            <h:outputText value="#{cliente.correo}"/>
+                        </p:column>
+                        <p:column headerText="GENERO">
+                            <h:outputText value="#{cliente.genero}"/>
+                        </p:column>
+                        <p:column headerText="EDAD">
+                            <h:outputText value="#{cliente.edad}"/>
+                        </p:column>
+                        <p:column headerText="OPCION">
+                            <p:commandButton value="Editar" icon="pi pi-pencil" class="ui-button-primary"
+                                             update="formulario-modal:ventana-cliente"
+                                             process="@this" style="margin-right: 5rem"
+                                             oncomplete="PF('VentanaModalCliente').show()">
+                                <f:setPropertyActionListener value="#{cliente}"
+                                                             target="#{indexController.clienteSeleccionado}"/>
+                                <p:resetInput target=":formulario-modal:ventana-cliente"/>
+                            </p:commandButton>
+                            <p:commandButton value="Eliminar" icon="pi pi-trash"
+                                             class="ui-button-danger"
+                                             process="@this"
+                                             oncomplete="PF('VentanaEliminarcliente').show()" >
+                                <f:setPropertyActionListener value="#{cliente}"
+                                                             target="#{indexController.clienteSeleccionado}" />
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
+                </div>
+            </h:form>
 
-                <p:column headerText="ID" sortBy="#{genero.idgenero}" filterBy="#{genero.idgenero}">
-                    <h:outputText value="#{genero.idgenero}"/>
-                </p:column>
+            <h:form id="formulario-modal">
+                <p:dialog header="Detalle del cliente" showEffect="fade"
+                          modal="true" widgetVar="VentanaModalCliente" responsive="true">
+                    <p:outputPanel id="ventana-cliente" class="ui-fluid">
+                        <div class="field">
+                            <p:outputLabel for="nombre">NOMBRE</p:outputLabel>
+                            <p:inputText id="nombre" required="true"
+                                         value="#{indexController.clienteSeleccionado.nombre}"/>
+                        </div>
+                        <div class="field">
+                            <p:outputLabel for="apellido">Apellido</p:outputLabel>
+                            <p:inputText id="apellido" required="false"
+                                         value="#{indexController.clienteSeleccionado.apellido}"/>
+                        </div>
+                        <div class="field">
+                            <p:outputLabel for="telefono">TELEFONO</p:outputLabel>
+                            <p:inputText id="telefono" required="false"
+                                         value="#{indexController.clienteSeleccionado.telefono}"/>
+                        </div>
+                        <div class="field">
+                            <p:outputLabel for="correo">CORREO</p:outputLabel>
+                            <p:inputText id="correo" required="true"
+                                         value="#{indexController.clienteSeleccionado.correo}"/>
+                        </div>
+                        <div class="field">
+                            <p:outputLabel for="genero">GENERO</p:outputLabel>
+                            <p:inputText id="genero" required="false"
+                                         value="#{indexController.clienteSeleccionado.genero}"/>
+                        </div>
+                        <div class="field">
+                            <p:outputLabel for="edad">EDAD</p:outputLabel>
+                            <p:inputText id="edad" required="true"
+                                         value="#{indexController.clienteSeleccionado.edad}"/>
+                        </div>
+                    </p:outputPanel>
+                    <f:facet name="footer">
+                        <p:commandButton value="Guardar" icon="pi pi-check"
+                                         class="ui-button-primary"
+                                         process="ventana-cliente @this"
+                                         actionListener="#{indexController.guardarCliente}"/>
 
-                <p:column headerText="Tipo de Género" sortBy="#{genero.tipogGenero}"
-                          filterBy="#{genero.tipogGenero}" filterMatchMode="contains">
-                    <h:outputText value="#{genero.tipogGenero}"/>
-                </p:column>
+                        <p:commandButton value="Cancelar" icon="pi pi-times" class="ui-button-secondary"
+                                         onclick="PF('VentanaModalCliente').hide()" type="button"/>
+                    </f:facet>
+                </p:dialog>
+                <p:confirmDialog widgetVar="VentanaEliminarcliente" showEffect="fade"
+                                 width="300" message="Desea Elimibar el cliente?"
+                                 header="Confirme su seleccion" severity="warn">
+                    <p:commandButton value="SI" icon="pi pi-check" class="ui-button-primary"
+                                     process="@this"
+                                     actionListener="#{indexController.eliminarCliente}"
+                                     oncomplete="PF('VentanaEliminarcliente').hide()"/>
 
-                <p:column headerText="Descripción" sortBy="#{genero.descripcionGenero}"
-                          filterBy="#{genero.descripcionGenero}" filterMatchMode="contains">
-                    <h:outputText value="#{genero.descripcionGenero}"/>
-                </p:column>
-            </p:dataTable>
-        </h:form>
-    </div>
-</h:body>
-</html>
+                    <p:commandButton value="NO" icon="pi pi-times" class="ui-button-warning"
+                                     onclick="PF('VentanaEliminarcliente').hide()"
+                                     type="button"/>
+                </p:confirmDialog>
+            </h:form>
+        </div>
+    </h:body>
+</h:html>
