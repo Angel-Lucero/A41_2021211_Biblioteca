@@ -4,77 +4,69 @@
         xmlns:f="http://xmlns.jcp.org/jsf/core"
         xmlns:p="http://primefaces.org/ui">
     <h:head>
-        <title>Kinavana 2024422</title>
+        <title>Ubicaciones</title>
         <link rel="stylesheet" href="https://unpkg.com/primeflex@latest/primeflex.css"/>
         <link rel="stylesheet" href="https://unpkg.com/primeflex@latest/themes/primeone-dark.css"/>
     </h:head>
     <h:body>
-        <p>Hola mundo, estoy en server faces, desde spring boot</p>
         <div class="card">
-            <h:form id="formulario-clientes">
-                <!-- Mensaje emergente -->
+            <h:form id="formulario-ubicaciones">
                 <p:growl id="mensaje_emergente" showDetails="true"/>
-                <!-- Barra de menus -->
                 <div class="card">
                     <p:menubar>
                         <p:menuitem value="Inicio" icon="pi pi-fw pi-user"
-                                    update=":formulario-clientes:tabla-clientes"
-                                    actionListener="#{indexController.cargarDatos}"/>
+                                    update=":formulario-ubicaciones:tabla-ubicaciones"
+                                    actionListener="#{ubicacionesController.cargarDatos}"/>
 
-                        <p:menuitem value="Nuevo Cliente" icon="pi pi-fw pi-plus"
-                                    actionListener="#{indexController.agregarCliente}"
-                                    update=":formulario-modal:ventana-cliente"
-                                    oncomplete="PF('VentanaModalCliente').show()"/>
+                        <p:menuitem value="Nueva Ubicación" icon="pi pi-fw pi-plus"
+                                    actionListener="#{ubicacionesController.agregarUbicacion}"
+                                    update=":formulario-modal:ventana-ubicacion"
+                                    oncomplete="PF('VentanaModalUbicacion').show()"/>
                     </p:menubar>
                 </div>
-                <!-- Tabla de datos -->
                 <div class="card">
-                    <p:dataTable value="#{indexController.clientes}" var="cliente" id="tabla-clientes" widgetVar="tablaClientes">
-                        <!-- Encabezado -->
+                    <p:dataTable value="#{ubicacionesController.ubicaciones}" var="ubicacion" id="tabla-ubicaciones" widgetVar="tablaUbicaciones">
                         <f:facet name="header">
                             <div class="flex justify-content-center flex-wrap card-container yellow-container">
                                 <div class="flex align-items-center justify-content-center w-20rem h-4rem bg-yellow-500 font-bold text-gray-900 border-round m-2">
-                                    <h3>Kinvana, clientes</h3>
+                                    <h3>Kinvana, Ubicaciones</h3>
                                 </div>
                             </div>
                         </f:facet>
                         <!-- Todas las columnas -->
                         <p:column headerText="ID">
-                            <h:outputText value="#{cliente.codigocliente}"/>
+                            <h:outputText value="#{ubicacion.idUbicacion}"/>
                         </p:column>
-                        <p:column headerText="NOMBRE">
-                            <h:outputText value="#{cliente.nombre}"/>
+                        <p:column headerText="EDIFICIO">
+                            <h:outputText value="#{ubicacion.edificio}"/>
                         </p:column>
-                        <p:column headerText="APELLIDO">
-                            <h:outputText value="#{cliente.apellido}"/>
+                        <p:column headerText="SALA">
+                            <h:outputText value="#{ubicacion.sala}"/>
                         </p:column>
-                        <p:column headerText="TELEFONO">
-                            <h:outputText value="#{cliente.telefono}"/>
+                        <p:column headerText="ESTANTE">
+                            <h:outputText value="#{ubicacion.estante}"/>
                         </p:column>
-                        <p:column headerText="CORREO">
-                            <h:outputText value="#{cliente.correo}"/>
+                        <p:column headerText="FILA">
+                            <h:outputText value="#{ubicacion.fila}"/>
                         </p:column>
-                        <p:column headerText="GENERO">
-                            <h:outputText value="#{cliente.genero}"/>
-                        </p:column>
-                        <p:column headerText="EDAD">
-                            <h:outputText value="#{cliente.edad}"/>
+                        <p:column headerText="COLUMNA">
+                            <h:outputText value="#{ubicacion.columna}"/>
                         </p:column>
                         <p:column headerText="OPCION">
                             <p:commandButton value="Editar" icon="pi pi-pencil" class="ui-button-primary"
-                                             update="formulario-modal:ventana-cliente"
+                                             update="formulario-modal:ventana-ubicacion"
                                              process="@this" style="margin-right: 5rem"
-                                             oncomplete="PF('VentanaModalCliente').show()">
-                                <f:setPropertyActionListener value="#{cliente}"
-                                                             target="#{indexController.clienteSeleccionado}"/>
-                                <p:resetInput target=":formulario-modal:ventana-cliente"/>
+                                             oncomplete="PF('VentanaModalUbicacion').show()">
+                                <f:setPropertyActionListener value="#{ubicacion}"
+                                                             target="#{ubicacionesController.ubicacionSeleccionada}"/>
+                                <p:resetInput target=":formulario-modal:ventana-ubicacion"/>
                             </p:commandButton>
                             <p:commandButton value="Eliminar" icon="pi pi-trash"
                                              class="ui-button-danger"
                                              process="@this"
-                                             oncomplete="PF('VentanaEliminarcliente').show()" >
-                                <f:setPropertyActionListener value="#{cliente}"
-                                                             target="#{indexController.clienteSeleccionado}" />
+                                             oncomplete="PF('VentanaEliminarUbicacion').show()" >
+                                <f:setPropertyActionListener value="#{ubicacion}"
+                                                             target="#{ubicacionesController.ubicacionSeleccionada}" />
                             </p:commandButton>
                         </p:column>
                     </p:dataTable>
@@ -82,60 +74,60 @@
             </h:form>
 
             <h:form id="formulario-modal">
-                <p:dialog header="Detalle del cliente" showEffect="fade"
-                          modal="true" widgetVar="VentanaModalCliente" responsive="true">
-                    <p:outputPanel id="ventana-cliente" class="ui-fluid">
+                <p:dialog header="Detalle de la ubicación" showEffect="fade"
+                          modal="true" widgetVar="VentanaModalUbicacion" responsive="true">
+                    <p:outputPanel id="ventana-ubicacion" class="ui-fluid">
                         <div class="field">
-                            <p:outputLabel for="nombre">NOMBRE</p:outputLabel>
-                            <p:inputText id="nombre" required="true"
-                                         value="#{indexController.clienteSeleccionado.nombre}"/>
+                            <p:outputLabel for="idubicacion">ID UBICACIÓN</p:outputLabel>
+                            <p:inputText id="idubicacion" required="true"
+                                         value="#{ubicacionesController.ubicacionSeleccionada.idUbicacion}"/>
                         </div>
                         <div class="field">
-                            <p:outputLabel for="apellido">Apellido</p:outputLabel>
-                            <p:inputText id="apellido" required="false"
-                                         value="#{indexController.clienteSeleccionado.apellido}"/>
+                            <p:outputLabel for="edificio">EDIFICIO</p:outputLabel>
+                            <p:inputText id="edificio" required="false"
+                                         value="#{ubicacionesController.ubicacionSeleccionada.edificio}"/>
                         </div>
                         <div class="field">
-                            <p:outputLabel for="telefono">TELEFONO</p:outputLabel>
-                            <p:inputText id="telefono" required="false"
-                                         value="#{indexController.clienteSeleccionado.telefono}"/>
+                            <p:outputLabel for="sala">SALA</p:outputLabel>
+                            <p:inputText id="sala" required="false"
+                                         value="#{ubicacionesController.ubicacionSeleccionada.sala}"/>
                         </div>
                         <div class="field">
-                            <p:outputLabel for="correo">CORREO</p:outputLabel>
-                            <p:inputText id="correo" required="true"
-                                         value="#{indexController.clienteSeleccionado.correo}"/>
+                            <p:outputLabel for="estante">ESTANTE</p:outputLabel>
+                            <p:inputText id="estante" required="false"
+                                         value="#{ubicacionesController.ubicacionSeleccionada.estante}"/>
                         </div>
                         <div class="field">
-                            <p:outputLabel for="genero">GENERO</p:outputLabel>
-                            <p:inputText id="genero" required="false"
-                                         value="#{indexController.clienteSeleccionado.genero}"/>
+                            <p:outputLabel for="fila">FILA</p:outputLabel>
+                            <p:inputText id="fila" required="false"
+                                         value="#{ubicacionesController.ubicacionSeleccionada.fila}"/>
                         </div>
                         <div class="field">
-                            <p:outputLabel for="edad">EDAD</p:outputLabel>
-                            <p:inputText id="edad" required="true"
-                                         value="#{indexController.clienteSeleccionado.edad}"/>
+                            <p:outputLabel for="columna">COLUMNA</p:outputLabel>
+                            <p:inputText id="columna" required="false"
+                                         value="#{ubicacionesController.ubicacionSeleccionada.columna}"/>
                         </div>
                     </p:outputPanel>
                     <f:facet name="footer">
                         <p:commandButton value="Guardar" icon="pi pi-check"
                                          class="ui-button-primary"
-                                         process="ventana-cliente @this"
-                                         actionListener="#{indexController.guardarCliente}"/>
+                                         process="ventana-ubicacion @this"
+                                         actionListener="#{ubicacionesController.guardarUbicacion}"/>
 
                         <p:commandButton value="Cancelar" icon="pi pi-times" class="ui-button-secondary"
-                                         onclick="PF('VentanaModalCliente').hide()" type="button"/>
+                                         onclick="PF('VentanaModalUbicacion').hide()" type="button"/>
                     </f:facet>
                 </p:dialog>
-                <p:confirmDialog widgetVar="VentanaEliminarcliente" showEffect="fade"
-                                 width="300" message="Desea Elimibar el cliente?"
+                <p:confirmDialog widgetVar="VentanaEliminarUbicacion" showEffect="fade"
+                                 width="300" message="Desea eliminar la ubicación?"
                                  header="Confirme su seleccion" severity="warn">
                     <p:commandButton value="SI" icon="pi pi-check" class="ui-button-primary"
                                      process="@this"
-                                     actionListener="#{indexController.eliminarCliente}"
-                                     oncomplete="PF('VentanaEliminarcliente').hide()"/>
+                                     actionListener="#{ubicacionesController.eliminarUbicacion}"
+                                     oncomplete="PF('VentanaEliminarUbicacion').hide()"/>
 
                     <p:commandButton value="NO" icon="pi pi-times" class="ui-button-warning"
-                                     onclick="PF('VentanaEliminarcliente').hide()"
+                                     onclick="PF('VentanaEliminarUbicacion').hide()"
                                      type="button"/>
                 </p:confirmDialog>
             </h:form>

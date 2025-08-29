@@ -11,7 +11,7 @@ import lombok.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
+@ToStringa
 @EqualsAndHashCode
 public class Genero {
 
